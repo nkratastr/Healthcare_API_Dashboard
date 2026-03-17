@@ -9,7 +9,7 @@ echo "Waiting for Flask to start..."
 sleep 3
 
 echo "Starting serveo tunnel..."
-ssh -o StrictHostKeyChecking=no -R healthcare-api-dashboard:80:localhost:5000 serveo.net 2>&1 | tee tunnel.log &
+ssh -o StrictHostKeyChecking=no -R healthcare_api_dashboard:80:localhost:5000 serveo.net 2>&1 | tee tunnel.log &
 
 sleep 4
 
