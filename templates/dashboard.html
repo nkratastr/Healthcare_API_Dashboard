@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Integration Monitor — Healthcare IT</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+  <!-- ── Header ─────────────────────────────────────────────── -->
+  <header>
+    <div class="header-inner">
+      <div class="header-title">
+        <span class="pulse-dot" id="pulse-dot"></span>
+        <h1>Integration Monitor</h1>
+        <span class="subtitle">Healthcare IT — System Status</span>
+      </div>
+      <div class="header-meta">
+        <span id="last-updated">Initialising…</span>
+        <button id="refresh-btn" onclick="fetchAll()">↻ Refresh</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ── Alert Banner ───────────────────────────────────────── -->
+    <section id="alerts-section" class="hidden">
+      <h2 class="section-title alert-title">⚠ Active Alerts</h2>
+      <div id="alerts-container"></div>
+    </section>
+
+    <!-- ── API Status Cards ───────────────────────────────────── -->
+    <section>
+      <h2 class="section-title">API Health Status</h2>
+      <div id="status-cards" class="cards-grid">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+
+    <!-- ── Logs & History (two-column) ───────────────────────── -->
+    <div class="two-col">
+
+      <!-- Recent Logs -->
+      <section>
+        <h2 class="section-title">Recent Logs
+          <span class="badge" id="log-count">0</span>
+        </h2>
+        <div class="table-wrapper">
+          <table id="logs-table">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>API</th>
+                <th>Status</th>
+                <th>Response (ms)</th>
+                <th>HTTP Code</th>
+                <th>Message</th>
+              </tr>
+            </thead>
+            <tbody id="logs-body">
+              <tr><td colspan="6" class="empty-row">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Per-API History -->
+      <section>
+        <h2 class="section-title">Check History</h2>
+        <div id="history-tabs" class="tabs"></div>
+        <div class="table-wrapper">
+          <table id="history-table">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>Status</th>
+                <th>Response (ms)</th>
+                <th>HTTP Code</th>
+              </tr>
+            </thead>
+            <tbody id="history-body">
+              <tr><td colspan="4" class="empty-row">Select an API above</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </div>
+
+  </main>
+
+  <footer>
+    <span>Integration Monitoring &amp; Alert System</span>
+    <span>Auto-refresh every 30 s</span>
+  </footer>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>

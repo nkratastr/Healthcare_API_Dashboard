@@ -1,0 +1,222 @@
+<mxfile host="app.diagrams.net" version="21.0.0">
+  <diagram name="System Architecture" id="structure-diagram">
+    <mxGraphModel dx="1300" dy="980" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="980" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- ═══ TITLE ═══ -->
+        <mxCell id="10" value="Integration Monitor — System Architecture"
+          style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontStyle=1;fontSize=17;fontColor=#333333;"
+          vertex="1" parent="1">
+          <mxGeometry x="250" y="18" width="800" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- ═══ LAYER LABELS ═══ -->
+        <mxCell id="50" value="External APIs"
+          style="text;html=1;strokeColor=none;fillColor=none;align=left;fontStyle=1;fontSize=11;fontColor=#6c8ebf;"
+          vertex="1" parent="1">
+          <mxGeometry x="20" y="108" width="120" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="51" value="Core Engine"
+          style="text;html=1;strokeColor=none;fillColor=none;align=left;fontStyle=1;fontSize=11;fontColor=#82b366;"
+          vertex="1" parent="1">
+          <mxGeometry x="20" y="268" width="120" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="52" value="Flask Server"
+          style="text;html=1;strokeColor=none;fillColor=none;align=left;fontStyle=1;fontSize=11;fontColor=#b85450;"
+          vertex="1" parent="1">
+          <mxGeometry x="20" y="428" width="120" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="53" value="Frontend"
+          style="text;html=1;strokeColor=none;fillColor=none;align=left;fontStyle=1;fontSize=11;fontColor=#9673a6;"
+          vertex="1" parent="1">
+          <mxGeometry x="20" y="588" width="120" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- ═══ SEPARATOR LINES ═══ -->
+        <mxCell id="58" style="endArrow=none;dashed=1;html=1;strokeColor=#dddddd;"
+          edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="150" y="88" as="sourcePoint" />
+            <mxPoint x="1270" y="88" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="59" style="endArrow=none;dashed=1;html=1;strokeColor=#dddddd;"
+          edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="150" y="248" as="sourcePoint" />
+            <mxPoint x="1270" y="248" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="60" style="endArrow=none;dashed=1;html=1;strokeColor=#dddddd;"
+          edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="150" y="408" as="sourcePoint" />
+            <mxPoint x="1270" y="408" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="61" style="endArrow=none;dashed=1;html=1;strokeColor=#dddddd;"
+          edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="150" y="568" as="sourcePoint" />
+            <mxPoint x="1270" y="568" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ═══ EXTERNAL APIs ═══ -->
+        <mxCell id="11" value="&lt;b&gt;CBS Statistics NL&lt;/b&gt;&lt;br&gt;opendata.cbs.nl"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;"
+          vertex="1" parent="1">
+          <mxGeometry x="140" y="98" width="185" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="12" value="&lt;b&gt;RIVM Public Health&lt;/b&gt;&lt;br&gt;data.rivm.nl"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;"
+          vertex="1" parent="1">
+          <mxGeometry x="490" y="98" width="185" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="13" value="&lt;b&gt;HAPI FHIR Server&lt;/b&gt;&lt;br&gt;hapi.fhir.org/baseR4"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;"
+          vertex="1" parent="1">
+          <mxGeometry x="840" y="98" width="185" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- ═══ CORE ENGINE ═══ -->
+        <mxCell id="14" value="&lt;b&gt;config.py&lt;/b&gt;&lt;br&gt;API list · thresholds&lt;br&gt;intervals · retry count"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;"
+          vertex="1" parent="1">
+          <mxGeometry x="80" y="258" width="160" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="15" value="&lt;b&gt;monitor.py&lt;/b&gt;&lt;br&gt;Health checks · Retry logic&lt;br&gt;Status classification · Alert engine"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;"
+          vertex="1" parent="1">
+          <mxGeometry x="440" y="258" width="230" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="16" value="&lt;b&gt;logger.py&lt;/b&gt;&lt;br&gt;Rotating file log&lt;br&gt;In-memory ring buffer"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;"
+          vertex="1" parent="1">
+          <mxGeometry x="870" y="258" width="175" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- ═══ FLASK SERVER ═══ -->
+        <mxCell id="17" value="&lt;b&gt;app.py&lt;/b&gt;&lt;br&gt;Flask routes&lt;br&gt;/api/status · /api/alerts · /api/logs"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;"
+          vertex="1" parent="1">
+          <mxGeometry x="440" y="418" width="230" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="18" value="&lt;b&gt;logs/monitor.log&lt;/b&gt;&lt;br&gt;Rotating file&lt;br&gt;(max 2 MB × 5 files)"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;"
+          vertex="1" parent="1">
+          <mxGeometry x="870" y="418" width="175" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- ═══ FRONTEND ═══ -->
+        <mxCell id="19" value="&lt;b&gt;dashboard.html&lt;/b&gt;&lt;br&gt;Status cards · Alert banner&lt;br&gt;Logs table · History sparklines"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;"
+          vertex="1" parent="1">
+          <mxGeometry x="390" y="578" width="230" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="20" value="&lt;b&gt;style.css&lt;/b&gt;&lt;br&gt;Dark theme&lt;br&gt;Color-coded (green/yellow/red)"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;"
+          vertex="1" parent="1">
+          <mxGeometry x="160" y="700" width="175" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="21" value="&lt;b&gt;script.js&lt;/b&gt;&lt;br&gt;fetch() polling every 30s&lt;br&gt;DOM rendering · sparklines"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;"
+          vertex="1" parent="1">
+          <mxGeometry x="620" y="700" width="175" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- ═══ BROWSER ═══ -->
+        <mxCell id="22" value="&lt;b&gt;Client Browser&lt;/b&gt;&lt;br&gt;Dashboard UI&lt;br&gt;Desktop / Mobile"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;"
+          vertex="1" parent="1">
+          <mxGeometry x="400" y="850" width="210" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- ═══ EDGES ═══ -->
+        <!-- External APIs → monitor.py -->
+        <mxCell id="30" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#6c8ebf;strokeWidth=1.5;"
+          edge="1" source="11" target="15" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="31" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#6c8ebf;strokeWidth=1.5;"
+          edge="1" source="12" target="15" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="32" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#6c8ebf;strokeWidth=1.5;"
+          edge="1" source="13" target="15" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- config.py → monitor.py + app.py -->
+        <mxCell id="33" value="config"
+          style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#d6b656;fontSize=10;"
+          edge="1" source="14" target="15" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="34" value="config"
+          style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#d6b656;fontSize=10;"
+          edge="1" source="14" target="17" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- monitor.py → logger.py + app.py -->
+        <mxCell id="35" value="log events"
+          style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#82b366;fontSize=10;"
+          edge="1" source="15" target="16" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="36" value="shared state"
+          style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#82b366;fontSize=10;"
+          edge="1" source="15" target="17" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- logger.py → log file -->
+        <mxCell id="37" value="writes"
+          style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#d79b00;fontSize=10;"
+          edge="1" source="16" target="18" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- app.py → dashboard.html -->
+        <mxCell id="38" value="serves"
+          style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#b85450;fontSize=10;"
+          edge="1" source="17" target="19" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- dashboard.html → css + js -->
+        <mxCell id="39" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#9673a6;"
+          edge="1" source="19" target="20" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="40" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#9673a6;"
+          edge="1" source="19" target="21" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- script.js → app.py (polling loop) -->
+        <mxCell id="41" value="GET /api/* (every 30s)"
+          style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#9673a6;dashed=1;fontSize=10;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;"
+          edge="1" source="21" target="17" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="840" y="735" />
+              <mxPoint x="840" y="453" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- dashboard → browser -->
+        <mxCell id="42" value="renders"
+          style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#9673a6;fontSize=10;"
+          edge="1" source="19" target="22" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

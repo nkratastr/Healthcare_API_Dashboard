@@ -1,0 +1,395 @@
+/* style.css — Integration Monitor Dashboard */
+
+/* ── Variables ──────────────────────────────────────────────── */
+:root {
+  --bg:         #0f1117;
+  --surface:    #1a1d27;
+  --surface2:   #23263a;
+  --border:     #2e3150;
+  --text:       #e2e8f0;
+  --text-muted: #7c85a2;
+
+  --ok:         #22c55e;
+  --ok-bg:      #052e16;
+  --slow:       #f59e0b;
+  --slow-bg:    #1c1000;
+  --down:       #ef4444;
+  --down-bg:    #1f0505;
+  --pending:    #64748b;
+  --pending-bg: #0f172a;
+
+  --accent:     #6366f1;
+  --radius:     10px;
+  --font:       'Segoe UI', system-ui, sans-serif;
+}
+
+/* ── Reset & Base ───────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 14px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Header ─────────────────────────────────────────────────── */
+header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 32px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+h1 {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.header-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+/* Pulsing live indicator dot */
+.pulse-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--ok);
+  display: inline-block;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(0.8); }
+}
+
+/* ── Refresh Button ─────────────────────────────────────────── */
+#refresh-btn {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: opacity 0.15s;
+}
+#refresh-btn:hover { opacity: 0.85; }
+
+/* ── Main Layout ────────────────────────────────────────────── */
+main {
+  flex: 1;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.section-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 14px;
+}
+
+/* ── Alert Banner ───────────────────────────────────────────── */
+.alert-title {
+  color: var(--down) !important;
+}
+
+.alert-card {
+  background: var(--down-bg);
+  border: 1px solid var(--down);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.alert-card.slow {
+  background: var(--slow-bg);
+  border-color: var(--slow);
+}
+
+.alert-badge {
+  font-weight: 700;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: var(--down);
+  color: #fff;
+  white-space: nowrap;
+}
+
+.alert-badge.slow {
+  background: var(--slow);
+  color: #000;
+}
+
+.alert-info { flex: 1; }
+.alert-name { font-weight: 600; font-size: 14px; }
+.alert-detail { color: var(--text-muted); font-size: 12px; margin-top: 2px; }
+.alert-time { color: var(--text-muted); font-size: 12px; white-space: nowrap; }
+
+/* ── Status Cards ───────────────────────────────────────────── */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 18px;
+}
+
+.status-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: border-color 0.3s;
+}
+
+.status-card.ok   { border-color: var(--ok); }
+.status-card.slow { border-color: var(--slow); }
+.status-card.down { border-color: var(--down); }
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.card-name {
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.3;
+}
+
+.card-desc {
+  color: var(--text-muted);
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+/* Status pill */
+.status-pill {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.status-pill.ok      { background: var(--ok-bg);      color: var(--ok);      border: 1px solid var(--ok); }
+.status-pill.slow    { background: var(--slow-bg);    color: var(--slow);    border: 1px solid var(--slow); }
+.status-pill.down    { background: var(--down-bg);    color: var(--down);    border: 1px solid var(--down); }
+.status-pill.pending { background: var(--pending-bg); color: var(--pending); border: 1px solid var(--pending); }
+
+/* Metrics row */
+.card-metrics {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.metric-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.metric-value {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.metric-value.ok   { color: var(--ok); }
+.metric-value.slow { color: var(--slow); }
+.metric-value.down { color: var(--down); }
+.metric-value.na   { color: var(--text-muted); font-size: 16px; }
+
+/* Sparkline bar row (last 10 checks) */
+.sparkline {
+  display: flex;
+  gap: 4px;
+  align-items: flex-end;
+  height: 28px;
+}
+
+.spark-bar {
+  flex: 1;
+  border-radius: 3px 3px 0 0;
+  min-height: 6px;
+  max-height: 100%;
+  transition: opacity 0.2s;
+}
+
+.spark-bar.ok   { background: var(--ok); }
+.spark-bar.slow { background: var(--slow); }
+.spark-bar.down { background: var(--down); }
+.spark-bar.empty { background: var(--border); }
+
+.card-timestamp {
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+/* ── Two-column layout ──────────────────────────────────────── */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+
+@media (max-width: 900px) {
+  .two-col { grid-template-columns: 1fr; }
+}
+
+/* ── Tables ─────────────────────────────────────────────────── */
+.table-wrapper {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+thead {
+  background: var(--surface2);
+}
+
+th {
+  text-align: left;
+  padding: 10px 14px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+td {
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover { background: var(--surface2); }
+
+.empty-row {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 24px;
+}
+
+/* Status text colours in tables */
+.ok-text   { color: var(--ok);      font-weight: 700; }
+.slow-text { color: var(--slow);    font-weight: 700; }
+.down-text { color: var(--down);    font-weight: 700; }
+
+/* ── History Tabs ───────────────────────────────────────────── */
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: background 0.15s, color 0.15s;
+}
+
+.tab-btn:hover  { background: var(--border); color: var(--text); }
+.tab-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+/* ── Badge ──────────────────────────────────────────────────── */
+.badge {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 20px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+/* ── Utility ────────────────────────────────────────────────── */
+.hidden { display: none !important; }
+
+/* ── Footer ─────────────────────────────────────────────────── */
+footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 12px 32px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--text-muted);
+}

@@ -1,0 +1,257 @@
+<mxfile host="app.diagrams.net" version="21.0.0">
+  <diagram name="Monitoring Workflow" id="workflow-diagram">
+    <mxGraphModel dx="1100" dy="1400" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1050" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- ═══ TITLE ═══ -->
+        <mxCell id="10" value="Integration Monitor — Monitoring Workflow"
+          style="text;html=1;strokeColor=none;fillColor=none;align=center;fontStyle=1;fontSize=17;fontColor=#333333;"
+          vertex="1" parent="1">
+          <mxGeometry x="150" y="18" width="750" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- ═══ SECTION BACKGROUNDS ═══ -->
+        <mxCell id="11" value="Background Monitor"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0f7ee;strokeColor=#82b366;fontSize=13;fontStyle=1;fontColor=#82b366;verticalAlign=top;opacity=50;"
+          vertex="1" parent="1">
+          <mxGeometry x="30" y="70" width="490" height="1280" as="geometry" />
+        </mxCell>
+        <mxCell id="12" value="Web Dashboard (Client)"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0f0ff;strokeColor=#9673a6;fontSize=13;fontStyle=1;fontColor=#9673a6;verticalAlign=top;opacity=50;"
+          vertex="1" parent="1">
+          <mxGeometry x="580" y="70" width="420" height="700" as="geometry" />
+        </mxCell>
+
+        <!-- ═══ BACKGROUND MONITOR FLOW ═══ -->
+
+        <!-- Start -->
+        <mxCell id="20" value="&lt;b&gt;START&lt;/b&gt;"
+          style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;"
+          vertex="1" parent="1">
+          <mxGeometry x="185" y="110" width="160" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Flask App Starts -->
+        <mxCell id="21" value="&lt;b&gt;Flask App Starts&lt;/b&gt;&lt;br&gt;app.py initialises"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;"
+          vertex="1" parent="1">
+          <mxGeometry x="175" y="210" width="180" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Initial Health Check -->
+        <mxCell id="22" value="&lt;b&gt;Run Initial Health Check&lt;/b&gt;&lt;br&gt;check all APIs immediately&lt;br&gt;(dashboard not empty on load)"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;"
+          vertex="1" parent="1">
+          <mxGeometry x="165" y="315" width="200" height="65" as="geometry" />
+        </mxCell>
+
+        <!-- Start Background Thread -->
+        <mxCell id="23" value="&lt;b&gt;Start Background Thread&lt;/b&gt;&lt;br&gt;daemon thread, runs forever"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;"
+          vertex="1" parent="1">
+          <mxGeometry x="165" y="430" width="200" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Wait 30s (loop marker) -->
+        <mxCell id="24" value="&lt;b&gt;Wait 30 Seconds&lt;/b&gt;&lt;br&gt;(CHECK_INTERVAL_SECONDS)"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;dashed=1;strokeWidth=2;"
+          vertex="1" parent="1">
+          <mxGeometry x="165" y="540" width="200" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- For Each API -->
+        <mxCell id="25" value="&lt;b&gt;For Each Configured API&lt;/b&gt;&lt;br&gt;CBS · RIVM · HAPI FHIR"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;"
+          vertex="1" parent="1">
+          <mxGeometry x="165" y="650" width="200" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- HTTP GET + Retry -->
+        <mxCell id="26" value="&lt;b&gt;Send HTTP GET Request&lt;/b&gt;&lt;br&gt;timeout: 10s&lt;br&gt;retry up to 2× on failure"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;"
+          vertex="1" parent="1">
+          <mxGeometry x="155" y="760" width="220" height="65" as="geometry" />
+        </mxCell>
+
+        <!-- Classify Status -->
+        <mxCell id="27" value="&lt;b&gt;Classify Status&lt;/b&gt;&lt;br&gt;✅ OK: HTTP 200, &lt; 2000ms&lt;br&gt;⚠ SLOW: HTTP 200, &gt; 2000ms&lt;br&gt;🔴 DOWN: error / non-200"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;"
+          vertex="1" parent="1">
+          <mxGeometry x="145" y="880" width="240" height="75" as="geometry" />
+        </mxCell>
+
+        <!-- Update State + History -->
+        <mxCell id="28" value="&lt;b&gt;Update Shared State + History&lt;/b&gt;&lt;br&gt;latest result · last 10 checks&lt;br&gt;(thread-safe lock)"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;"
+          vertex="1" parent="1">
+          <mxGeometry x="155" y="1010" width="220" height="65" as="geometry" />
+        </mxCell>
+
+        <!-- Alert Management -->
+        <mxCell id="29" value="&lt;b&gt;Alert Management&lt;/b&gt;&lt;br&gt;SLOW/DOWN → raise alert&lt;br&gt;Recovered to OK → clear alert"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;"
+          vertex="1" parent="1">
+          <mxGeometry x="155" y="1130" width="220" height="65" as="geometry" />
+        </mxCell>
+
+        <!-- Write to Log -->
+        <mxCell id="30" value="&lt;b&gt;Write to Log&lt;/b&gt;&lt;br&gt;→ logs/monitor.log (file)&lt;br&gt;→ in-memory buffer (UI)"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;"
+          vertex="1" parent="1">
+          <mxGeometry x="155" y="1250" width="220" height="65" as="geometry" />
+        </mxCell>
+
+        <!-- More APIs? Diamond -->
+        <mxCell id="31" value="&lt;b&gt;More APIs?&lt;/b&gt;"
+          style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;"
+          vertex="1" parent="1">
+          <mxGeometry x="145" y="1360" width="240" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- ═══ BACKGROUND MONITOR EDGES ═══ -->
+        <mxCell id="40" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#82b366;strokeWidth=2;"
+          edge="1" source="20" target="21" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="41" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#82b366;strokeWidth=2;"
+          edge="1" source="21" target="22" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="42" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#82b366;strokeWidth=2;"
+          edge="1" source="22" target="23" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="43" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#82b366;strokeWidth=2;"
+          edge="1" source="23" target="24" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="44" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#82b366;strokeWidth=2;"
+          edge="1" source="24" target="25" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="45" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#82b366;strokeWidth=2;"
+          edge="1" source="25" target="26" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="46" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#82b366;strokeWidth=2;"
+          edge="1" source="26" target="27" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="47" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#82b366;strokeWidth=2;"
+          edge="1" source="27" target="28" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="48" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#82b366;strokeWidth=2;"
+          edge="1" source="28" target="29" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="49" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#82b366;strokeWidth=2;"
+          edge="1" source="29" target="30" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="50" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#82b366;strokeWidth=2;"
+          edge="1" source="30" target="31" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- More APIs? → Yes → For each API (loop left) -->
+        <mxCell id="51" value="Yes — next API"
+          style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#6c8ebf;strokeWidth=1.5;fontSize=10;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;"
+          edge="1" source="31" target="25" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="70" y="1395" />
+              <mxPoint x="70" y="677" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- More APIs? → No → Wait 30s (loop back) -->
+        <mxCell id="52" value="No — all done"
+          style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#d6b656;strokeWidth=1.5;fontSize=10;dashed=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;"
+          edge="1" source="31" target="24" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="45" y="1395" />
+              <mxPoint x="45" y="567" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ═══ WEB DASHBOARD FLOW ═══ -->
+
+        <!-- Browser opens dashboard -->
+        <mxCell id="60" value="&lt;b&gt;User Opens Dashboard&lt;/b&gt;&lt;br&gt;GET / → dashboard.html"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;"
+          vertex="1" parent="1">
+          <mxGeometry x="635" y="155" width="210" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Dashboard Loads -->
+        <mxCell id="61" value="&lt;b&gt;Dashboard Loads&lt;/b&gt;&lt;br&gt;HTML + CSS + JS rendered&lt;br&gt;script.js initialises"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;"
+          vertex="1" parent="1">
+          <mxGeometry x="635" y="265" width="210" height="65" as="geometry" />
+        </mxCell>
+
+        <!-- Fetch from API -->
+        <mxCell id="62" value="&lt;b&gt;Fetch JSON Every 30s&lt;/b&gt;&lt;br&gt;GET /api/status&lt;br&gt;GET /api/alerts&lt;br&gt;GET /api/logs · /api/history"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;"
+          vertex="1" parent="1">
+          <mxGeometry x="625" y="390" width="230" height="85" as="geometry" />
+        </mxCell>
+
+        <!-- Render Dashboard -->
+        <mxCell id="63" value="&lt;b&gt;Render Dashboard&lt;/b&gt;&lt;br&gt;Color-coded status cards&lt;br&gt;Active alert banner&lt;br&gt;Logs table · Sparklines"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;"
+          vertex="1" parent="1">
+          <mxGeometry x="625" y="535" width="230" height="85" as="geometry" />
+        </mxCell>
+
+        <!-- Web Dashboard Edges -->
+        <mxCell id="70" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#9673a6;strokeWidth=2;"
+          edge="1" source="60" target="61" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="71" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#9673a6;strokeWidth=2;"
+          edge="1" source="61" target="62" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="72" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#9673a6;strokeWidth=2;"
+          edge="1" source="62" target="63" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Render → Fetch loop (right side) -->
+        <mxCell id="73" value="auto-refresh (30s)"
+          style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#9673a6;dashed=1;fontSize=10;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;"
+          edge="1" source="63" target="62" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="990" y="577" />
+              <mxPoint x="990" y="432" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ═══ CROSS-LANE CONNECTION ═══ -->
+        <!-- Fetch → Flask (dashed cross-lane) -->
+        <mxCell id="80" value="HTTP requests to Flask"
+          style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#b85450;dashed=1;strokeWidth=1.5;fontSize=10;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;"
+          edge="1" source="62" target="17" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ═══ LEGEND ═══ -->
+        <mxCell id="90" value="&lt;b&gt;Legend&lt;/b&gt;&lt;br&gt;━━ main flow&lt;br&gt;╌╌ loop / auto-refresh&lt;br&gt;◈ dashed border = loop marker"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;align=left;"
+          vertex="1" parent="1">
+          <mxGeometry x="630" y="680" width="220" height="90" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
